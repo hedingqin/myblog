@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://39.105.126.209:3306/blog?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: Hdq@19970201
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+logging:
+  level:
+    root: warn
+    com.hdq.blog: info
+  file:
+    path: log/blog-pro.log
+server:
+  port: 80

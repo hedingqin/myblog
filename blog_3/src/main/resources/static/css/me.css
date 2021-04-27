@@ -1,0 +1,220 @@
+
+/*使导航和底部透明*/
+.m-transparent {
+
+    /*filter:alpha(opacity=50);*/
+
+    /*-moz-opacity:0.5;*/
+
+    /*-khtml-opacity: 0.5;*/
+    /*opacity: 0.5;*/
+    /*background-color: #00FFFF !important;*/
+    /*background-image: linear-gradient(to right , #7A88FF, #7AFFAF) !important;*/
+    background-image:linear-gradient(to right,#009688 0,#5fb878 100%) !important;
+    opacity:.7;
+}
+
+/*padding是内边距，!important是将div区域显示出来*/
+.m-padded-mini{
+    padding: 0.2em !important;
+}
+.m-padded-tiny{
+    padding: 0.3em !important;
+}
+.m-padded{
+    padding: 1em !important;
+}
+/*padding-top和padding-bottom是内边距的上下间隔*/
+.m-padded-tb-mini{
+    padding-top: 0.2em !important;
+    padding-bottom: 0.2em !important;
+}
+.m-padded-tb-tiny{
+    padding-top: 0.3em !important;
+    padding-bottom: 0.3em !important;
+}
+.m-padded-tb-small{
+    padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
+}
+.m-padded-tb{
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+}
+.m-padded-tb-large{
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+}
+.m-padded-tb-big{
+    padding-top: 3em !important;
+    padding-bottom: 3em !important;
+}
+.m-padded-tb-huge{
+    padding-top: 4em !important;
+    padding-bottom: 4em !important;
+}
+.m-padded-tb-massive{
+    padding-top: 5em !important;
+    padding-bottom: 5em !important;
+}
+.m-padded-lr-responsive{
+    padding-left: 4em !important;
+    padding-right: 4em !important;
+}
+/*------margin：外边距-----*/
+.m-margin-tb-tiny{
+    margin-top: 0.3em !important;
+    margin-bottom: 0.3em !important;
+}
+.m-margin-top-small{
+    margin-top: 0.5em !important;
+}
+.m-margin-top{
+    margin-top: 1em !important;
+}
+.m-margin-top-large{
+    margin-top: 2em !important;
+}
+.m-margin-bottom-small{
+    margin-bottom: 0.5em !important;
+}
+/*-----text-----*/
+/*字体大小,字符间距,行间距*/
+.m-text{
+    font-weight: 300 !important;
+    letter-spacing: 1px !important;
+    line-height:1.8;
+}
+.m-text-mini{
+    font-weight: 100 !important;
+    letter-spacing: 1px !important;
+    line-height:1.8;
+}
+.m-text-{
+    font-weight: 300 !important;
+}
+.m-text-spaced{
+    letter-spacing: 1px !important;
+}
+.m-text-lined{
+    line-height:1.8;
+}
+
+/*-----opacity:透明度------*/
+.m-opacity-mini{
+    opacity: 0.9 !important;
+}
+m-opacity-tiny{
+    opacity: 0.6 !important;
+}
+/*-----position------*/
+/*定位到右上角*/
+.m-right-top{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/*-------display---------*/
+/*将block元素标签转换为非block元素标签*/
+.m-inline-block{
+    display: inline-block !important;
+}
+
+/*----------container--------*/
+.m-container{
+    max-width:72em !important;
+    margin:auto !important;/*margin:auto是居中*/
+}
+.m-container-small{
+    max-width:60em !important;
+    margin:auto !important;/*margin:auto是居中*/
+}
+/*-----shadow:阴影----*/
+.m-shadow-small{
+    /*为了适配谷歌等浏览器*/
+    -webkit-box-shadow:0 4px 8px rgba(0,0,0,0.2) !important;
+    /*0 4px---左,右阴影;8px是虚幻阴影范围;rgba中三个0是黑色,0.2是透明度;*/
+    box-shadow:0 4px 8px rgba(0,0,0,0.2) !important;
+}
+/*-----position-----*/
+/*绝对布局*/
+.m-fixed {
+    position:fixed !important;
+    /*z-index可以控制元素的级别，级别越高，就可以覆盖其他元素*/
+    z-index: 10 !important;
+}
+/*放置于右下角*/
+.m-right-bottom{
+    bottom: 0 !important;
+    right:0 !important;
+}
+/*----color----*/
+.m-black{
+    color:#333 !important;
+}
+.m-teal{
+    color:#00B5Ad !important;
+}
+.m-mobile-show{
+    display: none !important;
+}
+
+.m-white{
+    color:#FFFFFF !important;
+}
+/*PC端时：即屏幕大小>768px*/
+@media screen and (min-width: 768px){
+    /*网站背景图片*/
+    body{
+        /*background: url("../images/watercolor.png");*/
+        /*overflow: hidden;*/
+        /*background-color: #E0FFFF;*/
+        background-image: url("../images/alien1.jpg");
+        /*背景图片固定不动*/
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/ayuda.cur), default;
+        /*cursor: url( https://www.wnag.com.cn/wp-content/uploads/2020/02/cursor_1.png), default;*/
+    }
+}
+/** 链接鼠标指针样式**/
+a,div,span,p{
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/work.cur), default;
+    /*cursor:url(https://www.wnag.com.cn/wp-content/uploads/2020/02/cursor_2.png), pointer;*/
+}
+
+/*媒体查询：屏幕小于768px的时候*/
+@media screen and (max-width: 768px){
+
+    body{
+        background-color: #e8f2ff !important;
+    }
+    /*隐藏菜单栏 */
+    .m-mobile-hide{
+         display: none !important;
+     }
+
+    .m-mobile-show{
+        display: block !important;
+    }
+
+    /*使文章内容扩充到手机整个边框*/
+    .m-padded-lr-responsive{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .m-mobile-lr-clear{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    /*使博客详情页中姓名、邮箱、发布元素在手机端时可以填充整个区域*/
+    .m-mobile-wide{
+        width: 100% !important;
+    }
+}
+.content_break{
+    -ms-word-break: break-all !important;
+    word-break: break-all !important;
+}

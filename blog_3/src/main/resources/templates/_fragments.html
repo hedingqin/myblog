@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title th:replace="${title}">博客详情</title>
+    <!--前端框架-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <!--内容排版-->
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <!--代码高亮-->
+    <link rel="stylesheet" href="../static/prism/prism.css" th:href="@{/prism/prism.css}">
+    <!--目录生成-->
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href=@{/lib/tocbot/tocbot.css}>
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <!--动画效果-->
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+</head>
+<body>
+
+<!--导航-->
+<nav th:fragment="menu(n)" class="ui attached segment m-transparent m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <!--stackable用来适应移动端，使其中的每一模块垂直排列-->
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui header item m-white">找找bug</h2>
+            <a href="#" th:href="@{/}" class="m-item item m-mobile-hide m-white" th:classappend="${n==1} ? 'active'"><i class="home icon"></i>首页</a>
+            <a href="#" th:href="@{/types/-1}" class="m-item item m-mobile-hide m-white" th:classappend="${n==2} ? 'active'"><i class="idea icon"></i>分类</a>
+            <a href="#" th:href="@{/tags/-1}" class="m-item item m-mobile-hide m-white" th:classappend="${n==3} ? 'active'"><i class="tags icon"></i>标签</a>
+            <a href="#" th:href="@{/archives}" class="m-item item m-mobile-hide m-white" th:classappend="${n==4} ? 'active'"><i class="clone icon"></i>归档</a>
+            <a href="#" th:href="@{/about}" class="m-item item m-mobile-hide m-white" th:classappend="${n==5} ? 'active'"><i class="info icon"></i>关于我</a>
+            <div class="right m-item item m-mobile-hide">
+<!--                form表单默认提交方式为get-->
+                <form name="search" action="#" th:action="@{/search}" method="post" target="_blank">
+                    <div class="ui icon inverted transparent input">
+<!--                        input输入域中使用th:value，而div输入域等使用th:text来取后端值-->
+                        <input type="text" name="query" placeholder="Search...." th:value="${query}">
+                        <i onclick="document.forms['search'].submit()" class="search link icon m-white"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 手机端下拉框图标实现-->
+    <a href="#" class="ui menu toggle white icon button m-right-top m-mobile-show">
+        <!-- sidebar是下拉框图标-->
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--底部-->
+<footer th:fragment="footer" class="ui inverted vertical segment m-transparent m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <!--将这一行分为十六份-->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/images/wechat.jpg" th:src="@{/images/wechat3.jpg}" alt="" class="ui rounded image" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div id="newblog-container">
+                    <div class="ui inverted link list" th:fragment="newblogList">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item" th:each="blog : ${newblogs}" th:text="${blog.title}">用户故事(User Story)</a>
+                        <!--/*-->
+                        <a href="#" class="item">用户故事(User Story)</a>
+                        <a href="#" class="item">用户故事(User Story)</a>
+                        <!--*/-->
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">CSDN</h4>
+                <div class="ui inverted link list">
+<!--                    #{index.email}这种取值方式，取的是messages.properties中的值-->
+                    <!--/*-->
+                    <a href="#" class="item" th:text="#{index.email}">Email:hedqlkq@163.com</a>
+                    <a href="#" class="item">QQ:1933586585</a>
+                    <!--*/-->
+                    <a href="#" target="_blank" th:href="@{https://blog.csdn.net/qq_36134376}" class="item">MY CSDN</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">哈哈哈哈哈</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">只争朝夕，不负韶华！</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">copyright by findBug 版权所有</p>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny"><a href="https://beian.miit.gov.cn/" th:href="@{https://beian.miit.gov.cn/}" class="m-white" target="_blank">黔ICP备20006876号-1</a></p>
+    </div>
+
+</footer>
+<th:block th:fragment="script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+    <!--平滑滚动-->
+    <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+    <!--代码高亮-->
+    <script src="../static/prism/prism.js" th:src="@{/prism/prism.js}"></script>
+    <!--目录生成-->
+    <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+    <!--二维码生成-->
+    <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
+    <!--滚动侦测-->
+    <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+    <script>
+      // 页面打开时会自动加载该地址，异步加载数据
+        $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+    </script>
+<!--线条汇聚到鼠标，跟随鼠标移动-->
+<!--    <script>-->
+<!--        ! function() {-->
+<!--            function n(n, e, t) {-->
+<!--                return n.getAttribute(e) || t-->
+<!--            }-->
+
+<!--            function e(n) {-->
+<!--                return document.getElementsByTagName(n)-->
+<!--            }-->
+
+<!--            function t() {-->
+<!--                var t = e("script"),-->
+<!--                    o = t.length,-->
+<!--                    i = t[o - 1];-->
+<!--                return {-->
+<!--                    l: o,-->
+<!--                    z: n(i, "zIndex", -1),-->
+<!--                    o: n(i, "opacity", 1),-->
+<!--                    c: n(i, "color", "255,0,255"),//洋红色；控制线条的颜色的地方-->
+<!--                    n: n(i, "count", 200)-->
+<!--                }-->
+<!--            }-->
+
+<!--            function o() {-->
+<!--                a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight-->
+<!--            }-->
+
+<!--            function i() {-->
+<!--                r.clearRect(0, 0, a, c);-->
+<!--                var n, e, t, o, m, l;-->
+<!--                s.forEach(function(i, x) {-->
+<!--                    for(i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e], null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))-->
+<!--                }), x(i)-->
+<!--            }-->
+<!--            var a, c, u, m = document.createElement("canvas"),-->
+<!--                d = t(),-->
+<!--                l = "c_n" + d.l,-->
+<!--                r = m.getContext("2d"),-->
+<!--                x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(n) {-->
+<!--                    window.setTimeout(n, 1e3 / 45)-->
+<!--                },-->
+<!--                w = Math.random,-->
+<!--                y = {-->
+<!--                    x: null,-->
+<!--                    y: null,-->
+<!--                    max: 2e4-->
+<!--                };-->
+<!--            m.id = l, m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o, e("body")[0].appendChild(m), o(), window.onresize = o, window.onmousemove = function(n) {-->
+<!--                n = n || window.event, y.x = n.clientX, y.y = n.clientY-->
+<!--            }, window.onmouseout = function() {-->
+<!--                y.x = null, y.y = null-->
+<!--            };-->
+<!--            for(var s = [], f = 0; d.n > f; f++) {-->
+<!--                var h = w() * a,-->
+<!--                    g = w() * c,-->
+<!--                    v = 2 * w() - 1,-->
+<!--                    p = 2 * w() - 1;-->
+<!--                s.push({-->
+<!--                    x: h,-->
+<!--                    y: g,-->
+<!--                    xa: v,-->
+<!--                    ya: p,-->
+<!--                    max: 6e3-->
+<!--                })-->
+<!--            }-->
+<!--            u = s.concat([y]), setTimeout(function() {-->
+<!--                i()-->
+<!--            }, 100)-->
+<!--        }();-->
+<!--    </script>-->
+    <!--下雪特效-->
+    <script>
+        /* 控制下雪 */
+        function snowFall(snow) {
+            /* 可配置属性 */
+            snow = snow || {};
+            this.maxFlake = snow.maxFlake || 200;   /* 最多片数 */
+            this.flakeSize = snow.flakeSize || 10;  /* 雪花形状 */
+            this.fallSpeed = snow.fallSpeed || 1;   /* 坠落速度 */
+        }
+        /* 兼容写法 */
+        requestAnimationFrame = window.requestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            function(callback) { setTimeout(callback, 1000 / 60); };
+
+        cancelAnimationFrame = window.cancelAnimationFrame ||
+            window.mozCancelAnimationFrame ||
+            window.webkitCancelAnimationFrame ||
+            window.msCancelAnimationFrame ||
+            window.oCancelAnimationFrame;
+        /* 开始下雪 */
+        snowFall.prototype.start = function(){
+            /* 创建画布 */
+            snowCanvas.apply(this);
+            /* 创建雪花形状 */
+            createFlakes.apply(this);
+            /* 画雪 */
+            drawSnow.apply(this)
+        }
+        /* 创建画布 */
+        function snowCanvas() {
+            /* 添加Dom结点 */
+            var snowcanvas = document.createElement("canvas");
+            snowcanvas.id = "snowfall";
+            snowcanvas.width = document.body.offsetWidth;
+            snowcanvas.height = window.innerHeight;
+            snowcanvas.setAttribute("style", "position:fixed; top: 0; left: 0; z-index: -1; pointer-events: none;");
+            document.getElementsByTagName("body")[0].appendChild(snowcanvas);
+            this.canvas = snowcanvas;
+            this.ctx = snowcanvas.getContext("2d");
+            /* 窗口大小改变的处理 */
+            window.onresize = function() {
+                // snowcanvas.width = document.body.offsetWidth;
+                /* snowcanvas.height = window.innerHeight */
+            }
+        }
+        /* 雪运动对象 */
+        function flakeMove(canvasWidth, canvasHeight, flakeSize, fallSpeed) {
+            this.x = Math.floor(Math.random() * canvasWidth);   /* x坐标 */
+            this.y = Math.floor(Math.random() * canvasHeight);  /* y坐标 */
+            this.size = Math.random() * flakeSize + 2;          /* 形状 */
+            this.maxSize = flakeSize;                           /* 最大形状 */
+            this.speed = Math.random() * 1 + fallSpeed;         /* 坠落速度 */
+            this.fallSpeed = fallSpeed;                         /* 坠落速度 */
+            this.velY = this.speed;                             /* Y方向速度 */
+            this.velX = 0;                                      /* X方向速度 */
+            this.stepSize = Math.random() / 30;                 /* 步长 */
+            this.step = 0                                       /* 步数 */
+        }
+        flakeMove.prototype.update = function() {
+            var x = this.x,
+                y = this.y;
+            /* 左右摆动(余弦) */
+            this.velX *= 0.98;
+            if (this.velY <= this.speed) {
+                this.velY = this.speed
+            }
+            this.velX += Math.cos(this.step += .05) * this.stepSize;
+
+            this.y += this.velY;
+            this.x += this.velX;
+            /* 飞出边界的处理 */
+            if (this.x >= canvas.width || this.x <= 0 || this.y >= canvas.height || this.y <= 0) {
+                this.reset(canvas.width, canvas.height)
+            }
+        };
+        /* 飞出边界-放置最顶端继续坠落 */
+        flakeMove.prototype.reset = function(width, height) {
+            this.x = Math.floor(Math.random() * width);
+            this.y = 0;
+            this.size = Math.random() * this.maxSize + 2;
+            this.speed = Math.random() * 1 + this.fallSpeed;
+            this.velY = this.speed;
+            this.velX = 0;
+        };
+        // 渲染雪花-随机形状（此处可修改雪花颜色！！！）
+        flakeMove.prototype.render = function(ctx) {
+            var snowFlake = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+            snowFlake.addColorStop(0, "rgba(255, 255, 255, 0.9)");  /* 此处是雪花颜色，默认是白色 */
+            snowFlake.addColorStop(.5, "rgba(255, 255, 255, 0.5)"); /* 若要改为其他颜色，请自行查 */
+            snowFlake.addColorStop(1, "rgba(255, 255, 255, 0)");    /* 找16进制的RGB 颜色代码。 */
+            ctx.save();
+            ctx.fillStyle = snowFlake;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        };
+        /* 创建雪花-定义形状 */
+        function createFlakes() {
+            var maxFlake = this.maxFlake,
+                flakes = this.flakes = [],
+                canvas = this.canvas;
+            for (var i = 0; i < maxFlake; i++) {
+                flakes.push(new flakeMove(canvas.width, canvas.height, this.flakeSize, this.fallSpeed))
+            }
+        }
+        /* 画雪 */
+        function drawSnow() {
+            var maxFlake = this.maxFlake,
+                flakes = this.flakes;
+            ctx = this.ctx, canvas = this.canvas, that = this;
+            /* 清空雪花 */
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (var e = 0; e < maxFlake; e++) {
+                flakes[e].update();
+                flakes[e].render(ctx);
+            }
+            /*  一帧一帧的画 */
+            this.loop = requestAnimationFrame(function() {
+                drawSnow.apply(that);
+            });
+        }
+        /* 调用及控制方法 */
+        var snow = new snowFall({maxFlake:200});
+        snow.start();
+    </script>
+    <!--鼠标点击特效-->
+    <script src="../static/js/clicklove.js" th:src="@{/js/clicklove.js}"></script>
+</th:block>
+
+
+</body>
+</html>
